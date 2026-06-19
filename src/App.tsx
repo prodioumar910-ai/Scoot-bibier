@@ -8,11 +8,67 @@ import LocationMap from './components/LocationMap';
 import PortfolioStudio from './components/PortfolioStudio';
 import OrderModal from './components/OrderModal';
 import { Product } from './types';
+import { 
+  HERO_PRODUCTS, 
+  COLLABORATORS, 
+  ROW_1_PRODUCTS, 
+  ROW_2_PRODUCTS, 
+  ROW_3_PRODUCTS, 
+  PHOTOSHOOT_IMAGES, 
+  MAKEUP_IMAGE 
+} from './data';
 
 export default function App() {
   const [activePage, setActivePage] = useState<'shop' | 'portfolio'>('shop');
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // Background critical and lazy image preload engine to make images load instantly after deployment
+  useEffect(() => {
+    const criticalUrls = [
+      // Crucial Page 1 Hero carousel images
+      ...HERO_PRODUCTS.map(p => p.image),
+      
+      // Page 2 Spotlight and customized pictures
+      MAKEUP_IMAGE.url,
+      ...PHOTOSHOOT_IMAGES.map(img => img.url),
+
+      // Custom high-resolution SVG/PNG contact social icons
+      "https://lh3.googleusercontent.com/d/1S2LxSpNum9j-KJ6gDMrY2O--pQZGpl5B",
+      "https://lh3.googleusercontent.com/d/1kmu-CUCd4phEMCprAS_DrBTzGIs1wopU",
+      "https://lh3.googleusercontent.com/d/17_cpbmS5rgQbjwm2Ba2Psph7LQxJXmBi",
+
+      // Collaborator marquee logo assets
+      ...COLLABORATORS.map(collab => collab.logo),
+    ];
+
+    const lazyUrls = [
+      // Row catalogs first few major items (loaded secondary to ensure no thread or network blocking)
+      ...ROW_1_PRODUCTS.map(p => p.image),
+      ...ROW_2_PRODUCTS.map(p => p.image),
+      ...ROW_3_PRODUCTS.map(p => p.image)
+    ];
+
+    // Priority 1: Eagerly load critical elements
+    criticalUrls.forEach(url => {
+      if (url) {
+        const img = new Image();
+        img.src = url;
+      }
+    });
+
+    // Priority 2: Non-blocking defer loading for remaining product catalog items
+    const timer = setTimeout(() => {
+      lazyUrls.forEach(url => {
+        if (url) {
+          const img = new Image();
+          img.src = url;
+        }
+      });
+    }, 1500);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   // Scroll to top on page transition
   useEffect(() => {
