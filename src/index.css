@@ -1,0 +1,98 @@
+@import "tailwindcss";
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Syne:wght@400..800&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@theme {
+  --font-serif: "Playfair Display", Georgia, serif;
+  --font-syne: "Syne", sans-serif;
+  --font-sans: "Inter", sans-serif;
+}
+
+/* Base Body Styles */
+body {
+  font-family: var(--font-sans);
+  color: #ffffff;
+  background: radial-gradient(circle at center, #bf061e 0%, #8a001a 35%, #4d000c 75%, #1f0105 100%) no-repeat fixed;
+  background-size: cover;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* Custom Smooth Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(48, 5, 5, 0.4);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(254, 180, 137, 0.5);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(254, 180, 137, 0.8);
+}
+
+/* Smooth Scrolling Marquee System */
+@keyframes scroll-left-to-right {
+  0% {
+    transform: translate3d(-50%, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes scroll-right-to-left {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.animate-scroll-ltr {
+  display: flex;
+  width: max-content;
+  animation: scroll-left-to-right 30s linear infinite;
+}
+
+.animate-scroll-rtl {
+  display: flex;
+  width: max-content;
+  animation: scroll-right-to-left 30s linear infinite;
+}
+
+/* Pause scroll on hover */
+.marquee-container:hover .animate-scroll-ltr,
+.marquee-container:hover .animate-scroll-rtl {
+  animation-play-state: paused;
+}
+
+/* Custom glassmorphism utilities */
+.glass-panel {
+  background: rgba(48, 5, 5, 0.45);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(254, 180, 137, 0.15);
+}
+
+/* Hide scrollbars but keep functionality */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.glass-panel-light {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}

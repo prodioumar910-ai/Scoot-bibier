@@ -1,0 +1,8 @@
+{
+  "name": "Mali bibier ",
+  "description": "Découvrez notre collection d\u0027habits de styliste haut de gamme, nos services de shooting photo professionnels et de maquillage de prestige.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
